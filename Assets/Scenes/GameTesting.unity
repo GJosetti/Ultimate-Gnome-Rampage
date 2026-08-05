@@ -263,7 +263,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.33577183, y: -0.010483033, z: 0.003355927, w: 0.9418791}
-  m_LocalPosition: {x: 0, y: 7, z: -13.625}
+  m_LocalPosition: {x: 0, y: 8.44, z: -15.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -966,6 +966,7 @@ GameObject:
   - component: {fileID: 2060955443}
   - component: {fileID: 2060955442}
   - component: {fileID: 2060955441}
+  - component: {fileID: 2060955445}
   - component: {fileID: 2060955444}
   - component: {fileID: 2060955440}
   - component: {fileID: 2060955439}
@@ -1088,7 +1089,7 @@ Transform:
   m_GameObject: {fileID: 2060955438}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.5677874, y: 4.67, z: -7.09}
+  m_LocalPosition: {x: 0.38, y: 2.12, z: -7.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1110,6 +1111,18 @@ MonoBehaviour:
   jumpForce: 3
   jumpDistance: 5
   footHeight: 1.2
+--- !u!114 &2060955445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060955438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb42ec26590bad8438b6205b2450f020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
