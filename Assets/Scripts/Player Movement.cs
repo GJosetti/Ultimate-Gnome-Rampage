@@ -10,17 +10,18 @@ public class PlayerMovement : MonoBehaviour
     
     Rigidbody rb;
 
-    [SerializeField]
-    bool isJumping;
+  
+    
 
     [Range(0,100)]
     public float jumpForce, jumpDistance, footHeight;
 
-
+    PlayerController controller;
 
 
     void Start()
     {
+        controller = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -30,11 +31,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
+        if (controller.IsAttacking) return; // não pode mover enquanto ataca
+
         Vector3 inputDir = InputCheck();
     
-        if (inputDir == Vector3.zero) return;
-        
-        if (!isJumping && isOnGround())
+     
+        if (!controller.IsJumping && isOnGround() && (inputDir != Vector3.zero))
         {
             JumpTowardsDirection(inputDir);
         }
@@ -73,10 +76,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    IEnumerator  JumpSequence(Vector3 dir)
+    IEnumerator JumpSequence(Vector3 dir)
     {
-        isJumping = true;
-
+        controller.SetJumping(true);
+        
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         
         yield return new WaitForSeconds(0.1f);
@@ -85,9 +88,12 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        isJumping = false;
+        controller.SetJumping(false);
 
     }
+
+
+
 
     private void OnDrawGizmos()
     {
