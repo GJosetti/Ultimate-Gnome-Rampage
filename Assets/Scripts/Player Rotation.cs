@@ -1,9 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerRotation : MonoBehaviour
 {
 
-    Vector3 mousePos;
+    public Vector3 mouseDir;
     Rigidbody rb;
 
 
@@ -15,7 +16,7 @@ public class PlayerRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mousePos = Input.mousePosition;
+        Vector3 mousePos = Input.mousePosition;
 
         int layerMask = ~LayerMask.GetMask("UI");
 
@@ -29,10 +30,13 @@ public class PlayerRotation : MonoBehaviour
 
             Vector3 direction = target - transform.position;
 
+            mouseDir = direction.normalized;
+
             if (direction != Vector3.zero)
             {
                 transform.rotation = Quaternion.LookRotation(direction);
             }
         }
     }
+
 }
