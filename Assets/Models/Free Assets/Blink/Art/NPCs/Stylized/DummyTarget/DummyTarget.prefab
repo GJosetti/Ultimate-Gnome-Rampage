@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 2859952174631872381}
   - component: {fileID: 8651302956817688195}
   - component: {fileID: 4814048563762846338}
-  m_Layer: 0
+  - component: {fileID: 8648830900370400859}
+  - component: {fileID: 5921322226313479021}
+  m_Layer: 7
   m_Name: DummyTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,5 +90,37 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8648830900370400859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493484833918569187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4cb4697b601464a94deac40a77d61a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseEnemy
+--- !u!65 &5921322226313479021
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493484833918569187}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.0168872, y: 2.1328294, z: 0.914475}
+  m_Center: {x: -0.08016172, y: -0.026110768, z: 0.0008996427}

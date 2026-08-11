@@ -6,16 +6,19 @@ public class PlayerRotation : MonoBehaviour
 
     public Vector3 mouseDir;
     Rigidbody rb;
-
+    PlayerController controller;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        controller = GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (controller.IsDashAttacking) return;
+
         Vector3 mousePos = Input.mousePosition;
 
         int layerMask = ~LayerMask.GetMask("UI");
