@@ -24,28 +24,40 @@ public class SwordDrag : MonoBehaviour
 
     void FixedUpdate()
     {
-       
+        // --- Spring/Damper: puxa a espada em direção à mão ---
         Vector3 toTarget = handAnchor.position - currentPos;
         Vector3 acceleration = toTarget * stiffness - velocity * damping;
         velocity += acceleration * Time.fixedDeltaTime;
-        if (toTarget.magnitude < 0.1)
+
+        if (toTarget.magnitude < 0.1f)
         {
             velocity = Vector3.zero;
         }
+
         currentPos += velocity * Time.fixedDeltaTime;
 
+        // --- Clamp de distância máxima (maxLag) ---
         Vector3 diff = currentPos - handAnchor.position;
         if (diff.magnitude > maxLag)
-            currentPos = handAnchor.position + diff.normalized * maxLag;
+        {
+            Vector3 clampDir = diff.normalized;
+            currentPos = handAnchor.position + clampDir * maxLag;
 
-        
+            // Remove a componente de velocidade que empurra além do limite,
+            // evitando acúmulo de energia "escondida" frame após frame
+            float radialVel = Vector3.Dot(velocity, clampDir);
+            if (radialVel > 0)
+                velocity -= clampDir * radialVel;
+        }
+
+        // --- Colisão simples com o corpo do player (cilindro visto de cima) ---
         Vector2 flatOffset = new Vector2(currentPos.x - playerCenter.position.x,
                                           currentPos.z - playerCenter.position.z);
 
         if (flatOffset.magnitude < playerRadius)
         {
             Vector2 pushDir = flatOffset.normalized;
-            
+
             if (flatOffset.magnitude < 0.001f)
                 pushDir = Vector2.up;
 
@@ -53,7 +65,6 @@ public class SwordDrag : MonoBehaviour
             currentPos.x = playerCenter.position.x + correctedFlat.x;
             currentPos.z = playerCenter.position.z + correctedFlat.y;
 
-          
             Vector3 correctionDir = new Vector3(pushDir.x, 0, pushDir.y);
             float velocityIntoPlayer = Vector3.Dot(velocity, -correctionDir);
             if (velocityIntoPlayer > 0)
@@ -62,7 +73,7 @@ public class SwordDrag : MonoBehaviour
 
         transform.position = currentPos;
 
-        
+        // --- Rotaciona a espada na direção da mão ---
         Vector3 dir = handAnchor.position - currentPos;
         if (dir.sqrMagnitude > 0.01f)
         {

@@ -34,10 +34,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (controller.IsDashAttacking && !controller.isAttackSpin) return; // não pode mover enquanto ataca
 
-
-        
-        
-        
         Vector3 inputDir = InputCheck();
 
         if (controller.isAttackSpin)
