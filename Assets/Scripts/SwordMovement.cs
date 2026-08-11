@@ -24,7 +24,7 @@ public class SwordDrag : MonoBehaviour
 
     void FixedUpdate()
     {
-        // --- Spring normal ---
+       
         Vector3 toTarget = handAnchor.position - currentPos;
         Vector3 acceleration = toTarget * stiffness - velocity * damping;
         velocity += acceleration * Time.fixedDeltaTime;
@@ -38,14 +38,14 @@ public class SwordDrag : MonoBehaviour
         if (diff.magnitude > maxLag)
             currentPos = handAnchor.position + diff.normalized * maxLag;
 
-        // --- Empurra a espada pra fora do corpo do player ---
+        
         Vector2 flatOffset = new Vector2(currentPos.x - playerCenter.position.x,
                                           currentPos.z - playerCenter.position.z);
 
         if (flatOffset.magnitude < playerRadius)
         {
             Vector2 pushDir = flatOffset.normalized;
-            // Se a espada estiver exatamente no centro (raro), empurra numa direção padrão
+            
             if (flatOffset.magnitude < 0.001f)
                 pushDir = Vector2.up;
 
@@ -53,7 +53,7 @@ public class SwordDrag : MonoBehaviour
             currentPos.x = playerCenter.position.x + correctedFlat.x;
             currentPos.z = playerCenter.position.z + correctedFlat.y;
 
-            // Zera a velocidade na direção da correção pra não "empurrar de volta" com força
+          
             Vector3 correctionDir = new Vector3(pushDir.x, 0, pushDir.y);
             float velocityIntoPlayer = Vector3.Dot(velocity, -correctionDir);
             if (velocityIntoPlayer > 0)
@@ -62,7 +62,7 @@ public class SwordDrag : MonoBehaviour
 
         transform.position = currentPos;
 
-        // --- Rotação (yaw only, top-down) ---
+        
         Vector3 dir = handAnchor.position - currentPos;
         if (dir.sqrMagnitude > 0.01f)
         {

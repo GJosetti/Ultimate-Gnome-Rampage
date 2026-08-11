@@ -32,15 +32,26 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        if (controller.IsAttacking) return; // não pode mover enquanto ataca
+        if (controller.IsDashAttacking && !controller.isAttackSpin) return; // não pode mover enquanto ataca
 
+
+        
+        
+        
         Vector3 inputDir = InputCheck();
-    
-     
-        if (!controller.IsJumping && isOnGround() && (inputDir != Vector3.zero))
+
+        if (controller.isAttackSpin)
         {
-            JumpTowardsDirection(inputDir);
+            rb.AddForce(inputDir * jumpDistance, ForceMode.Force);
         }
+        else
+        { 
+            if (!controller.IsJumping && isOnGround() && (inputDir != Vector3.zero))
+            {
+                JumpTowardsDirection(inputDir);
+            }
+        }
+
     }
 
 
