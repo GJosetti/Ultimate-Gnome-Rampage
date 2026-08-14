@@ -20,11 +20,15 @@ public class PlayerAttack : MonoBehaviour
     PlayerController controller;
     PlayerRotation rotation;
 
+    
+    SwordDrag swordDrag;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<PlayerController>();
         rotation = GetComponent<PlayerRotation>();
+        swordDrag = GetComponentInChildren<SwordDrag>();
     }
 
     void Update()
@@ -42,17 +46,21 @@ public class PlayerAttack : MonoBehaviour
     {
         controller.SetDashAttacking(true);
         rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero; // zera qualquer rotação "fantasma" acumulada
         rb.AddForce(dir * dashDistance, ForceMode.Impulse);
+
+        swordDrag?.ResetDrag();
+
         float rotated = 0f;
-        float rotationSpeed = (360f) / dashDuration; // corrigido: era dividido duas vezes
+        float rotationSpeed = 360f / dashDuration;
 
         while (rotated < 360f)
         {
-            float step = rotationSpeed * Time.deltaTime;
+            yield return new WaitForFixedUpdate(); // sincroniza com o passo de física
+            float step = rotationSpeed * Time.fixedDeltaTime;
             step = Mathf.Min(step, 360f - rotated);
-            transform.Rotate(Vector3.up, step);
+            rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, step, 0f));
             rotated += step;
-            yield return null;
         }
 
         yield return StartCoroutine(SpinAttack());
@@ -61,18 +69,19 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator SpinAttack()
     {
-        float rotated = 0f;
-        float rotationSpeed = 360f / dashDuration; // corrigido também aqui
+        float rotationSpeed = 360f / dashDuration;
         controller.SetAttackSpin(true);
         StartCoroutine(TickDamage());
 
         while (Input.GetMouseButton(0))
         {
-            float step = rotationSpeed * Time.deltaTime;
-            transform.Rotate(Vector3.up, step);
-            rotated += step;
-            yield return null;
+            yield return new WaitForFixedUpdate();
+            float step = rotationSpeed * Time.fixedDeltaTime;
+            rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, step, 0f));
         }
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         controller.SetAttackSpin(false);
     }
 

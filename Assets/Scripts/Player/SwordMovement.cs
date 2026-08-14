@@ -84,5 +84,15 @@ public class SwordDrag : MonoBehaviour
             float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(90, angle + 90, 0);
         }
+
+
+
     }
+
+    public void ResetDrag()
+    {
+        currentPos = handAnchor.position;
+        velocity = Vector3.zero;
+    }
+
 }
