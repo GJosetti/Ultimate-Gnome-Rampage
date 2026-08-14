@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class SwordDrag : MonoBehaviour
 {
+
+    [SerializeField]
+    PlayerController controller;
+    
     [Header("Referências")]
     public Transform handAnchor;
     public Transform playerCenter;    // centro do player (geralmente o pivot do corpo)
@@ -78,7 +82,7 @@ public class SwordDrag : MonoBehaviour
         if (dir.sqrMagnitude > 0.01f)
         {
             float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(90, angle, 0);
+            transform.rotation = Quaternion.Euler(90, angle + 90, 0);
         }
     }
 }
