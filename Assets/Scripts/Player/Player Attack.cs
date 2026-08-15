@@ -8,10 +8,13 @@ public class PlayerAttack : MonoBehaviour
     public float dashDuration;
     [Range(1, 10)]  // mudei o m�nimo pra 1, pra evitar divis�o por zero
     public int tickRate;
+    [Range(0.05f, 5f)]
+    public float spinSpeed;
     public int damagePerTick;
     public float attackRadius;
     [SerializeField]
     LayerMask enemyLayerMask;
+
 
     // Buffer reutiliz�vel, evita alocar um array novo toda hora
     Collider[] hitBuffer = new Collider[20]; // 20 = n�mero m�ximo de inimigos detectados por vez, ajuste se precisar
@@ -91,7 +94,7 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator SpinAttack()
     {
-        float rotationSpeed = 360f / dashDuration;
+        float rotationSpeed = 360f / spinSpeed;
         controller.SetAttackSpin(true);
         StartCoroutine(TickDamage());
 
@@ -127,7 +130,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 if (hitBuffer[i].TryGetComponent<BaseEnemy>(out BaseEnemy enemy))
                 {
-                    enemy.TakeDamage(damagePerTick);
+                    enemy.TakeDamage(damagePerTick, transform.position);
                 }
             }
 
