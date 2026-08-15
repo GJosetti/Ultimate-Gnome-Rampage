@@ -28,7 +28,7 @@ public class SwordDrag : MonoBehaviour
 
     void FixedUpdate()
     {
-        // --- Spring/Damper: puxa a espada em direção à mão ---
+    
         Vector3 toTarget = handAnchor.position - currentPos;
         Vector3 acceleration = toTarget * stiffness - velocity * damping;
         velocity += acceleration * Time.fixedDeltaTime;
@@ -40,21 +40,20 @@ public class SwordDrag : MonoBehaviour
 
         currentPos += velocity * Time.fixedDeltaTime;
 
-        // --- Clamp de distância máxima (maxLag) ---
+    
         Vector3 diff = currentPos - handAnchor.position;
         if (diff.magnitude > maxLag)
         {
             Vector3 clampDir = diff.normalized;
             currentPos = handAnchor.position + clampDir * maxLag;
 
-            // Remove a componente de velocidade que empurra além do limite,
-            // evitando acúmulo de energia "escondida" frame após frame
+            
             float radialVel = Vector3.Dot(velocity, clampDir);
             if (radialVel > 0)
                 velocity -= clampDir * radialVel;
         }
 
-        // --- Colisão simples com o corpo do player (cilindro visto de cima) ---
+      
         Vector2 flatOffset = new Vector2(currentPos.x - playerCenter.position.x,
                                           currentPos.z - playerCenter.position.z);
 

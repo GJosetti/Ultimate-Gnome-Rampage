@@ -20,7 +20,8 @@ public class PlayerAttack : MonoBehaviour
     PlayerController controller;
     PlayerRotation rotation;
 
-    
+
+    [SerializeField]
     SwordDrag swordDrag;
 
 
@@ -33,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<PlayerController>();
         rotation = GetComponent<PlayerRotation>();
-        swordDrag = GetComponentInChildren<SwordDrag>();
+        
         playerCollider = GetComponent<Collider>();
     }
 
@@ -54,6 +55,13 @@ public class PlayerAttack : MonoBehaviour
         controller.SetDashAttacking(true);
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero; // zera qualquer rota��o "fantasma" acumulada
+
+
+        float ogLag = swordDrag.maxLag; 
+
+        swordDrag.maxLag = 0;
+
+
         rb.AddForce(dir * dashDistance, ForceMode.Impulse);
 
 
@@ -76,6 +84,8 @@ public class PlayerAttack : MonoBehaviour
         playerCollider.material = normalMaterial;
 
         yield return StartCoroutine(SpinAttack());
+
+        swordDrag.maxLag = ogLag;
         controller.SetDashAttacking(false);
     }
 
