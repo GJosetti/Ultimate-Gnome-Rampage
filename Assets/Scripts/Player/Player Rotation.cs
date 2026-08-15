@@ -7,6 +7,7 @@ public class PlayerRotation : MonoBehaviour
     public Vector3 mouseDir;
     Rigidbody rb;
     PlayerController controller;
+    public LayerMask ground;
 
     void Start()
     {
@@ -21,7 +22,7 @@ public class PlayerRotation : MonoBehaviour
 
         Vector3 mousePos = Input.mousePosition;
 
-        int layerMask = ~LayerMask.GetMask("UI");
+        int layerMask = ground;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
