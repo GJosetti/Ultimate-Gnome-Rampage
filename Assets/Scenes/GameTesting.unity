@@ -1607,6 +1607,14 @@ PrefabInstance:
       propertyPath: dashDuration
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 3991081889276306000, guid: a9593de7634ed1f45aed96a71e7bc57b, type: 3}
+      propertyPath: dashMaterial
+      value: 
+      objectReference: {fileID: 13400000, guid: 4d264e2acbb257045b53a668a87782fb, type: 2}
+    - target: {fileID: 3991081889276306000, guid: a9593de7634ed1f45aed96a71e7bc57b, type: 3}
+      propertyPath: normalMaterial
+      value: 
+      objectReference: {fileID: 13400000, guid: 230506dd748d0b24ab2bf85b20b13496, type: 2}
     - target: {fileID: 5466035254998345910, guid: a9593de7634ed1f45aed96a71e7bc57b, type: 3}
       propertyPath: m_Enabled
       value: 0

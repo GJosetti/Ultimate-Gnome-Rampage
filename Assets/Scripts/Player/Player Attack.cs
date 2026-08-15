@@ -6,15 +6,15 @@ public class PlayerAttack : MonoBehaviour
     [Range(0, 100)]
     public float dashDistance;
     public float dashDuration;
-    [Range(1, 10)]  // mudei o mínimo pra 1, pra evitar divisão por zero
+    [Range(1, 10)]  // mudei o mï¿½nimo pra 1, pra evitar divisï¿½o por zero
     public int tickRate;
     public int damagePerTick;
     public float attackRadius;
     [SerializeField]
     LayerMask enemyLayerMask;
 
-    // Buffer reutilizável, evita alocar um array novo toda hora
-    Collider[] hitBuffer = new Collider[20]; // 20 = número máximo de inimigos detectados por vez, ajuste se precisar
+    // Buffer reutilizï¿½vel, evita alocar um array novo toda hora
+    Collider[] hitBuffer = new Collider[20]; // 20 = nï¿½mero mï¿½ximo de inimigos detectados por vez, ajuste se precisar
 
     Rigidbody rb;
     PlayerController controller;
@@ -23,12 +23,18 @@ public class PlayerAttack : MonoBehaviour
     
     SwordDrag swordDrag;
 
+
+    public PhysicsMaterial dashMaterial; // atrito 0, configurado no Inspector
+    public PhysicsMaterial normalMaterial; // seu material padrï¿½o
+    Collider playerCollider;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<PlayerController>();
         rotation = GetComponent<PlayerRotation>();
         swordDrag = GetComponentInChildren<SwordDrag>();
+        playerCollider = GetComponent<Collider>();
     }
 
     void Update()
@@ -44,24 +50,30 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator DashAttack(Vector3 dir)
     {
+        playerCollider.material = dashMaterial;
         controller.SetDashAttacking(true);
         rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero; // zera qualquer rotação "fantasma" acumulada
+        rb.angularVelocity = Vector3.zero; // zera qualquer rotaï¿½ï¿½o "fantasma" acumulada
         rb.AddForce(dir * dashDistance, ForceMode.Impulse);
 
+
+
         swordDrag?.ResetDrag();
+        SetCollisionWithEnemies(false);
 
         float rotated = 0f;
         float rotationSpeed = 360f / dashDuration;
 
         while (rotated < 360f)
         {
-            yield return new WaitForFixedUpdate(); // sincroniza com o passo de física
+            yield return new WaitForFixedUpdate(); // sincroniza com o passo de fï¿½sica
             float step = rotationSpeed * Time.fixedDeltaTime;
             step = Mathf.Min(step, 360f - rotated);
             rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, step, 0f));
             rotated += step;
         }
+        SetCollisionWithEnemies(true);
+        playerCollider.material = normalMaterial;
 
         yield return StartCoroutine(SpinAttack());
         controller.SetDashAttacking(false);
@@ -83,6 +95,16 @@ public class PlayerAttack : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         controller.SetAttackSpin(false);
+    }
+
+    void SetCollisionWithEnemies(bool enabled)
+    {
+        Collider[] enemies = Physics.OverlapSphere(transform.position, 5f, enemyLayerMask);
+        Collider playerCol = GetComponent<Collider>();
+        foreach (Collider enemyCol in enemies)
+        {
+            Physics.IgnoreCollision(playerCol, enemyCol, !enabled);
+        }
     }
 
     IEnumerator TickDamage()
