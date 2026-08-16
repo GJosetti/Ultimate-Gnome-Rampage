@@ -86,9 +86,9 @@ public class PlayerAttack : MonoBehaviour
         SetCollisionWithEnemies(true);
         playerCollider.material = normalMaterial;
 
+        //Se manter pressionado entra na rotina de SpinAttack
         if (Input.GetMouseButton(0))
         {
-            Debug.Log("Não soltou");
             yield return StartCoroutine(SpinAttack());    
         }
         swordDrag.maxLag = ogLag;
@@ -127,7 +127,6 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
+       
     }
 }

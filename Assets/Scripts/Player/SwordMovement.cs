@@ -101,9 +101,9 @@ public class SwordDrag : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<BaseEnemy>(out BaseEnemy enemy))
+        if (other.TryGetComponent<BaseEnemy>(out BaseEnemy enemy) && controller.IsAttacking)
         {
-            if (hitEnemies.Contains(enemy)) return; // já foi atingido nesse ataque
+            if (hitEnemies.Contains(enemy)) return; 
 
             hitEnemies.Add(enemy);
             enemy.TakeDamage(1, transform.position);

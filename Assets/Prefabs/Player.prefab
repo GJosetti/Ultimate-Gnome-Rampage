@@ -265,6 +265,7 @@ MonoBehaviour:
   dashDistance: 30
   dashDuration: 0.4
   tickRate: 3
+  spinSpeed: 0.05
   damagePerTick: 1
   attackRadius: 2
   enemyLayerMask:
