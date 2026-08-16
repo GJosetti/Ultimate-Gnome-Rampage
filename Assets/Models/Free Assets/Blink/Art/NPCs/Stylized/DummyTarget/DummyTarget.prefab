@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5921322226313479021}
   m_Layer: 7
   m_Name: DummyTarget
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,9 +30,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7024948615009471923}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8651302956817688195
@@ -103,6 +104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4cb4697b601464a94deac40a77d61a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseEnemy
+  maxLife: 1000
+  meshRenderer: {fileID: 4814048563762846338}
 --- !u!65 &5921322226313479021
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -124,3 +127,65 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.0168872, y: 2.1328294, z: 0.914475}
   m_Center: {x: -0.08016172, y: -0.026110768, z: 0.0008996427}
+--- !u!1001 &7525023420687672141
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2859952174631872381}
+    m_Modifications:
+    - target: {fileID: 654114195470970622, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 654114195470970622, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.155
+      objectReference: {fileID: 0}
+    - target: {fileID: 654114195470970622, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.295
+      objectReference: {fileID: 0}
+    - target: {fileID: 654114195470970622, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 654114195470970622, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 654114195470970622, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 654114195470970622, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 654114195470970622, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 654114195470970622, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 654114195470970622, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2832092308771627940, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+      propertyPath: m_Name
+      value: Particulas de dano
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+--- !u!4 &7024948615009471923 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 654114195470970622, guid: 65943503c8304ee449f22fed2916a43e, type: 3}
+  m_PrefabInstance: {fileID: 7525023420687672141}
+  m_PrefabAsset: {fileID: 0}

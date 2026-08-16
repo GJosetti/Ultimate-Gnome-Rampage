@@ -58,7 +58,7 @@ public class PlayerAttack : MonoBehaviour
         controller.SetDashAttacking(true);
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero; // zera qualquer rota��o "fantasma" acumulada
-
+        swordDrag.ResetHits();
 
         float ogLag = swordDrag.maxLag; 
 
@@ -74,7 +74,7 @@ public class PlayerAttack : MonoBehaviour
 
         float rotated = 0f;
         float rotationSpeed = 360f / dashDuration;
-
+      
         while (rotated < 360f)
         {
             yield return new WaitForFixedUpdate(); // sincroniza com o passo de f�sica
@@ -86,21 +86,25 @@ public class PlayerAttack : MonoBehaviour
         SetCollisionWithEnemies(true);
         playerCollider.material = normalMaterial;
 
-        yield return StartCoroutine(SpinAttack());
-
+        if (Input.GetMouseButton(0))
+        {
+            Debug.Log("Não soltou");
+            yield return StartCoroutine(SpinAttack());    
+        }
         swordDrag.maxLag = ogLag;
         controller.SetDashAttacking(false);
+
     }
 
     IEnumerator SpinAttack()
     {
         float rotationSpeed = 360f / spinSpeed;
         controller.SetAttackSpin(true);
-        StartCoroutine(TickDamage());
-
+       
         while (Input.GetMouseButton(0))
         {
             yield return new WaitForFixedUpdate();
+            swordDrag.ResetHits();
             float step = rotationSpeed * Time.fixedDeltaTime;
             rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, step, 0f));
         }
@@ -120,23 +124,6 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    IEnumerator TickDamage()
-    {
-        while (controller.isAttackSpin)
-        {
-            int hitCount = Physics.OverlapSphereNonAlloc(transform.position, attackRadius, hitBuffer, enemyLayerMask);
-
-            for (int i = 0; i < hitCount; i++)
-            {
-                if (hitBuffer[i].TryGetComponent<BaseEnemy>(out BaseEnemy enemy))
-                {
-                    enemy.TakeDamage(damagePerTick, transform.position);
-                }
-            }
-
-            yield return new WaitForSeconds(1f / tickRate);
-        }
-    }
 
     private void OnDrawGizmos()
     {

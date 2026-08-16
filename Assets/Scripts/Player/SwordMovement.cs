@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SwordDrag : MonoBehaviour
@@ -21,9 +22,13 @@ public class SwordDrag : MonoBehaviour
     private Vector3 velocity;
     private Vector3 currentPos;
 
+    public BoxCollider collider;
+
+    private HashSet<BaseEnemy> hitEnemies = new HashSet<BaseEnemy>();
     void Start()
     {
         currentPos = handAnchor.position;
+        collider = GetComponent<BoxCollider>();
     }
 
     void FixedUpdate()
@@ -88,6 +93,22 @@ public class SwordDrag : MonoBehaviour
 
     }
 
+
+    public void ResetHits()
+    {
+        hitEnemies.Clear();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<BaseEnemy>(out BaseEnemy enemy))
+        {
+            if (hitEnemies.Contains(enemy)) return; // já foi atingido nesse ataque
+
+            hitEnemies.Add(enemy);
+            enemy.TakeDamage(1, transform.position);
+        }
+    }
     public void ResetDrag()
     {
         currentPos = handAnchor.position;
