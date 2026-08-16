@@ -4,6 +4,8 @@ public class PlayerController : MonoBehaviour
 {
 
 
+    public static PlayerController Instance { get; private set; }
+
     [SerializeField]
     public bool IsDashAttacking;
 
@@ -20,6 +22,11 @@ public class PlayerController : MonoBehaviour
     public void SetJumping(bool value) => IsJumping = value;
 
     public void SetAttackSpin(bool value) => isAttackSpin = value;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Update()
     {

@@ -8,6 +8,7 @@ public class Door : MonoBehaviour
     [SerializeField]
     CinemachineCamera camera1, camera2;
 
+   
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class Door : MonoBehaviour
         {
            camera1.Priority = 0;
            camera2.Priority = 10;
+            GameManager.room++;
         }
     }
 }
