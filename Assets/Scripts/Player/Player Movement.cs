@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.UI.Image;
@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     
 
     [Range(0,100)]
-    public float jumpForce, jumpDistance, footHeight;
+    public float jumpForce, jumpDistance, footHeight,walkSpeed;
 
     PlayerController controller;
 
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     
 
-    void Update()
+    void FixedUpdate()
     {
 
         if (controller.IsDashAttacking && !controller.isAttackSpin) return; // não pode mover enquanto ataca
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (controller.isAttackSpin)
         {
-            rb.AddForce(inputDir * jumpDistance, ForceMode.Force);
+            rb.AddForce(inputDir * walkSpeed, ForceMode.Force);
         }
         else
         { 

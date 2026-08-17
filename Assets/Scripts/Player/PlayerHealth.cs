@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField]
-    int maxHealth, actualHealth;
+    public int maxHealth, actualHealth;
     
     
     
@@ -16,7 +17,11 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (actualHealth <= 0)
+        {
+            GameManager.ResetState();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void TakeDamage(int amount)

@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be3776e9bd6e31341b3490a035f6ea50, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.06932
+      value: 15.62635
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be3776e9bd6e31341b3490a035f6ea50, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.46
+      value: -3.59201
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be3776e9bd6e31341b3490a035f6ea50, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.8786783
+      value: 12.728961
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be3776e9bd6e31341b3490a035f6ea50, type: 3}
       propertyPath: m_LocalRotation.w
@@ -137,8 +137,8 @@ MonoBehaviour:
   attackForce: 15
   attackCooldown: 1
   attackDashDuration: 0.5
-  attackBoxSize: {x: 1, y: 1.5, z: 1.5}
-  attackBoxForwardOffset: 1
+  attackBoxSize: {x: 1, y: 1.5, z: 4}
+  attackBoxForwardOffset: 2
   attackTimer: 0
   currentState: 0
 --- !u!54 &3894090197880957755

@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour
 {
+
+    public event System.Action<BaseEnemy> OnDeath;
+
     [SerializeField]
     protected int maxLife = 3;
     protected int life;
@@ -84,7 +87,8 @@ public class BaseEnemy : MonoBehaviour
 
     void Die()
     {
-        Debug.Log($"{gameObject.name} morreu");
+        
+        OnDeath?.Invoke(this);
         Destroy(gameObject);
     }
 }

@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5220637509527953253}
   - component: {fileID: 6605543230177331367}
-  - component: {fileID: 2184358634862834638}
   - component: {fileID: 2622645504822109358}
+  - component: {fileID: 4517307570027812764}
+  - component: {fileID: 2184358634862834638}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -77,20 +78,6 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
---- !u!114 &2184358634862834638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5608915597382525481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7319625ecb90c394fbe8cc65700af845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Cameras
-  cineCamera: {fileID: 0}
-  myRoom: 0
 --- !u!114 &2622645504822109358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,3 +95,30 @@ MonoBehaviour:
   AmplitudeGain: 0
   FrequencyGain: 1
   m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &4517307570027812764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5608915597382525481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab97a8e6e1ef3b48947fc5d8800267e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraPriority
+  defaultPriority: 0
+--- !u!114 &2184358634862834638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5608915597382525481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7319625ecb90c394fbe8cc65700af845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cameras
+  cineCamera: {fileID: 0}
+  myRoom: 0
