@@ -8,11 +8,20 @@ public class Door : MonoBehaviour
     [SerializeField]
     CinemachineCamera camera1, camera2;
 
+    [SerializeField]
+    int myRoom;
+
+
+    BoxCollider collider;
+    Animator portaAnim;
+
    
 
     void Start()
     {
-        
+        collider = GetComponent<BoxCollider>();
+        portaAnim = GetComponentInChildren<Animator>();
+        portaAnim.speed = 0;
     }
 
     // Update is called once per frame
@@ -27,7 +36,14 @@ public class Door : MonoBehaviour
         {
            camera1.Priority = 0;
            camera2.Priority = 10;
-            GameManager.room++;
+           GameManager.room++;
+
+            collider.isTrigger = false;
+            portaAnim.speed = 1;
+           
+
+
+           
         }
     }
 }

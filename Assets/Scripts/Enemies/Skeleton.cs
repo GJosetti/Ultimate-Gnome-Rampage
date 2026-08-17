@@ -6,12 +6,16 @@ using UnityEngine;
 using UnityEngine.AI;
 public class Skeleton : BaseEnemy
 {
-    [SerializeField] float damage;
+    [SerializeField] int damage;
     [SerializeField, Range(1, 20)] float attackRange;
     [SerializeField, Range(0, 2)] float attackStunTime = 0.5f;
     [SerializeField, Range(1, 20)] float attackForce;
     [SerializeField, Range(1, 20)] float attackCooldown;
     [SerializeField, Range(0.05f, 1f)] float attackDashDuration = 0.2f; // duração do "dash" em si
+
+    [Header("Attack Hitbox")]
+    [SerializeField] Vector3 attackBoxSize = new Vector3(1f, 1.5f, 1.5f);
+    [SerializeField] float attackBoxForwardOffset = 1f;
 
     [SerializeField]
     float attackTimer = 0;
@@ -21,6 +25,7 @@ public class Skeleton : BaseEnemy
     [SerializeField]
     SkeletonState currentState;
     bool isAttacking;
+    bool hasHitPlayerThisAttack;
 
     enum SkeletonState
     {
@@ -30,8 +35,14 @@ public class Skeleton : BaseEnemy
         Attack,
         Die
     }
-    void Start()
+
+    // centro da hitbox de ataque: um pouco à frente do inimigo, na altura do corpo
+    Vector3 AttackBoxCenter => transform.position + transform.forward * attackBoxForwardOffset + Vector3.up * (attackBoxSize.y / 2f);
+
+    protected override void Start()
     {
+        base.Start();
+
         animator = GetComponent<Animator>();
         animator.speed = 0;
         maxLife = 10;
@@ -100,6 +111,7 @@ public class Skeleton : BaseEnemy
     IEnumerator AttackRoutine()
     {
         isAttacking = true;
+        hasHitPlayerThisAttack = false;
 
         // desliga o NavMeshAgent enquanto controlamos o movimento via Rigidbody
         agent.isStopped = true;
@@ -129,6 +141,7 @@ public class Skeleton : BaseEnemy
         while (elapsed < attackDashDuration)
         {
             rb.MovePosition(rb.position + dashDir * attackForce * Time.fixedDeltaTime);
+            CheckAttackHit();
             elapsed += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
@@ -143,14 +156,37 @@ public class Skeleton : BaseEnemy
 
     }
 
+    void CheckAttackHit()
+    {
+        if (hasHitPlayerThisAttack) return;
+
+        Collider[] hits = Physics.OverlapBox(AttackBoxCenter, attackBoxSize / 2f, transform.rotation);
+        foreach (Collider col in hits)
+        {
+            if (col.CompareTag("Player"))
+            {
+                hasHitPlayerThisAttack = true;
+                Debug.Log("Acertei o player!");
+                
+                col.TryGetComponent<PlayerHealth>(out PlayerHealth playerHealth);
+                playerHealth.TakeDamage(damage);
+
+                break;
+            }
+        }
+    }
+
     IEnumerator Appear()
     {
         yield return new WaitForSeconds(1f);
         animator.speed = 1;
+
+        yield return new WaitForSeconds(1f);
+        if (currentState == SkeletonState.Hide)
+            onAppearAnimationEnd();
     }
     void onAppearAnimationEnd()
     {
-        Debug.Log("Ta idle");
         currentState = SkeletonState.Idle;
     }
 
@@ -168,5 +204,12 @@ public class Skeleton : BaseEnemy
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        // desenha a hitbox de ataque (mesma posição/rotação usada no OverlapBox)
+        Gizmos.color = Color.yellow;
+        Matrix4x4 oldMatrix = Gizmos.matrix;
+        Gizmos.matrix = Matrix4x4.TRS(AttackBoxCenter, transform.rotation, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, attackBoxSize);
+        Gizmos.matrix = oldMatrix;
     }
 }

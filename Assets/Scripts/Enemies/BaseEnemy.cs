@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour
 {
+    [SerializeField]
     protected int maxLife = 3;
     protected int life;
     [SerializeField]
@@ -17,18 +18,20 @@ public class BaseEnemy : MonoBehaviour
     ParticleSystem pSystem;
     ParticleDamage particleDamage;
 
-    void Start()
+    protected virtual void Start()
     {
         player = PlayerController.Instance;
 
         life = maxLife;
 
         meshRenderers = GetComponentsInChildren<Renderer>();
+       
         materials = new Material[meshRenderers.Length];
         for (int i = 0; i < meshRenderers.Length; i++)
         {
             materials[i] = meshRenderers[i].material; // instancia, evita mexer no shared material
         }
+       
 
         pSystem = GetComponentInChildren<ParticleSystem>();
         particleDamage = GetComponentInChildren<ParticleDamage>();

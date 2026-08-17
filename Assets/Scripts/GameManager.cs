@@ -4,4 +4,7 @@ public static class GameManager
 {
     static public  int room = 0;
 
+    static public Cameras camera;
+
+
 }
