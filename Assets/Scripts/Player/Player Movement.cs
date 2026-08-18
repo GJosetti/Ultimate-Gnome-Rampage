@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
@@ -41,11 +42,12 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(inputDir * walkSpeed, ForceMode.Force);
         }
         else
-        { 
+        {
             if (!controller.IsJumping && isOnGround() && (inputDir != Vector3.zero))
             {
                 JumpTowardsDirection(inputDir);
             }
+            
         }
 
     }
@@ -86,7 +88,9 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator JumpSequence(Vector3 dir)
     {
         controller.SetJumping(true);
+
         
+
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         
         yield return new WaitForSeconds(0.1f);

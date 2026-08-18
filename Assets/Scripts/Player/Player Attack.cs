@@ -18,6 +18,8 @@ public class PlayerAttack : MonoBehaviour
 
     // Buffer reutiliz�vel, evita alocar um array novo toda hora
     Collider[] hitBuffer = new Collider[20]; // 20 = n�mero m�ximo de inimigos detectados por vez, ajuste se precisar
+    bool hitWall = false;
+
 
     Rigidbody rb;
     PlayerController controller;
@@ -54,7 +56,7 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator DashAttack(Vector3 dir)
     {
-        playerCollider.material = dashMaterial;
+        
         controller.SetDashAttacking(true);
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero; // zera qualquer rota��o "fantasma" acumulada
@@ -75,13 +77,15 @@ public class PlayerAttack : MonoBehaviour
         float rotated = 0f;
         float rotationSpeed = 360f / dashDuration;
       
-        while (rotated < 360f)
+        
+        while (rotated < 360f && hitWall == false)
         {
             yield return new WaitForFixedUpdate(); // sincroniza com o passo de f�sica
             float step = rotationSpeed * Time.fixedDeltaTime;
             step = Mathf.Min(step, 360f - rotated);
             rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, step, 0f));
             rotated += step;
+            
         }
         SetCollisionWithEnemies(true);
         playerCollider.material = normalMaterial;
@@ -91,6 +95,10 @@ public class PlayerAttack : MonoBehaviour
         {
             yield return StartCoroutine(SpinAttack());    
         }
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
         swordDrag.maxLag = ogLag;
         controller.SetDashAttacking(false);
 
@@ -124,6 +132,27 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+
+    private void OnCollisionStay(Collision collision)
+    {
+        //Caso colida com a parede no meio do dash
+        if (collision.gameObject.CompareTag("Wall") && controller.IsDashAttacking)
+        {           
+            rb.rotation = Quaternion.Euler(0, rb.rotation.eulerAngles.y, 0); // zera qualquer rotação "fantasma" acumulada
+            hitWall = true;
+            rb.angularVelocity = Vector3.zero;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        //Caso colida com a parede no meio do dash
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            hitWall = false;
+           
+        }
+    }
 
     private void OnDrawGizmos()
     {
