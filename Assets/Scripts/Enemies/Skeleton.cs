@@ -4,6 +4,7 @@ using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.PlayerSettings;
 public class Skeleton : BaseEnemy
 {
     [SerializeField] int damage;
@@ -11,6 +12,7 @@ public class Skeleton : BaseEnemy
     [SerializeField, Range(0, 2)] float attackStunTime = 0.5f;
     [SerializeField, Range(1, 20)] float attackForce;
     [SerializeField, Range(1, 20)] float attackCooldown;
+    [SerializeField, Range(0.1f, 1f)] float windupOffset; //tempo de trava da rotação do inimigo até ele dar o dash 
     [SerializeField, Range(0.05f, 1f)] float attackDashDuration = 0.2f; // duração do "dash" em si
 
     [Header("Attack Hitbox")]
@@ -20,6 +22,7 @@ public class Skeleton : BaseEnemy
     [SerializeField]
     float attackTimer = 0;
     Rigidbody rb;
+    BoxCollider myCollider;
     NavMeshAgent agent;
     Animator animator;
     [SerializeField]
@@ -50,6 +53,9 @@ public class Skeleton : BaseEnemy
         currentState = SkeletonState.Hide;
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
+        myCollider = GetComponent<BoxCollider>();
+        Physics.IgnoreCollision(myCollider, player.GetComponent<CapsuleCollider>(), true);
+        rb.isKinematic = true;
     }
     // Lógica
     void Update()
@@ -113,47 +119,48 @@ public class Skeleton : BaseEnemy
         isAttacking = true;
         hasHitPlayerThisAttack = false;
 
-        // desliga o NavMeshAgent enquanto controlamos o movimento via Rigidbody
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
+        agent.updatePosition = false;
+        agent.updateRotation = false;
 
         animator.SetBool("Attacking", true);
 
-        // durante a preparação, continua rotacionando pro player em vez de ficar travado
+        // windup (ainda kinemático, gira normalmente com MoveRotation)
         float windupTimer = 0f;
         Vector3 dashDir = transform.forward;
         while (windupTimer < attackStunTime)
         {
             Vector3 lookDir = GetPlayer().transform.position - transform.position;
             lookDir.y = 0;
-
-            if (lookDir != Vector3.zero)
+            if (lookDir != Vector3.zero && windupTimer < attackStunTime - windupOffset)
             {
                 dashDir = lookDir.normalized;
                 rb.MoveRotation(Quaternion.LookRotation(dashDir));
             }
-
             windupTimer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
 
+        // ativa física real só durante o dash
+        rb.isKinematic = false;
+        rb.AddForce(dashDir * attackForce, ForceMode.Impulse);
+
         float elapsed = 0f;
         while (elapsed < attackDashDuration)
         {
-            rb.MovePosition(rb.position + dashDir * attackForce * Time.fixedDeltaTime);
             CheckAttackHit();
             elapsed += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
 
-        // para o dash
         rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true; // volta a ser imune a empurrões
 
-        // sincroniza o agent com a posição real após o movimento manual
         agent.Warp(transform.position);
+        agent.updatePosition = true;
+        agent.updateRotation = true;
         agent.isStopped = false;
-
-
     }
 
     void CheckAttackHit()
@@ -166,7 +173,7 @@ public class Skeleton : BaseEnemy
             if (col.CompareTag("Player"))
             {
                 hasHitPlayerThisAttack = true;
-                Debug.Log("Acertei o player!");
+                
                 
                 col.TryGetComponent<PlayerHealth>(out PlayerHealth playerHealth);
                 playerHealth.TakeDamage(damage);

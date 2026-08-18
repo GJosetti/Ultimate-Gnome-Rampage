@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
             if (!controller.IsJumping && isOnGround() && (inputDir != Vector3.zero))
             {
                 JumpTowardsDirection(inputDir);
+                
             }
             
         }
@@ -101,6 +102,11 @@ public class PlayerMovement : MonoBehaviour
 
         controller.SetJumping(false);
 
+        if (!controller.IsAttacking)
+        {
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 
 

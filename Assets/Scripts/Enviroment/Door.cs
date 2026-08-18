@@ -9,6 +9,8 @@ public class Door : MonoBehaviour
     BoxCollider collider;
     Animator portaAnim;
 
+    Vector3 EntradaPos;
+
     void Start()
     {
         collider = GetComponent<BoxCollider>();
@@ -37,7 +39,7 @@ public class Door : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && (EntradaPos.x < other.gameObject.transform.position.x))
         {
             camera1.Priority = 0;
             camera2.Priority = 10;
@@ -51,6 +53,16 @@ public class Door : MonoBehaviour
             collider.isTrigger = false;
             portaAnim.SetBool("isOpen", false);
             portaAnim.speed = 1;
+        }
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            EntradaPos = other.transform.position;
+            
         }
     }
 }
