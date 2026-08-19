@@ -1250,8 +1250,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6491329280234134777, guid: 61b3e3801d56a3f429556c96ea2f07d6, type: 3}
-      propertyPath: windupOffset
-      value: 0.5
+      propertyPath: maxLife
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2747,7 +2747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6533822d3c1f08b4da754a3c7d4f169a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 100
+  maxHealth: 3
   actualHealth: 0
 --- !u!1 &2074371344
 GameObject:

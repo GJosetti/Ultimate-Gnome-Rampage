@@ -10,7 +10,7 @@ public class Skeleton : BaseEnemy
     [SerializeField] int damage;
     [SerializeField, Range(1, 20)] float attackRange;
     [SerializeField, Range(0, 2)] float attackStunTime = 0.5f;
-    [SerializeField, Range(1, 20)] float attackForce;
+    [SerializeField, Range(10, 40)] float attackForce;
     [SerializeField, Range(1, 20)] float attackCooldown;
     [SerializeField, Range(0.1f, 1f)] float windupOffset; //tempo de trava da rotação do inimigo até ele dar o dash 
     [SerializeField, Range(0.05f, 1f)] float attackDashDuration = 0.2f; // duração do "dash" em si
@@ -29,6 +29,7 @@ public class Skeleton : BaseEnemy
     SkeletonState currentState;
     bool isAttacking;
     bool hasHitPlayerThisAttack;
+    Coroutine attackRoutineRef;
 
     enum SkeletonState
     {
@@ -36,6 +37,7 @@ public class Skeleton : BaseEnemy
         Idle,
         Walk,
         Attack,
+        Hit,
         Die
     }
 
@@ -48,7 +50,6 @@ public class Skeleton : BaseEnemy
 
         animator = GetComponent<Animator>();
         animator.speed = 0;
-        maxLife = 10;
         life = maxLife;
         currentState = SkeletonState.Hide;
         rb = GetComponent<Rigidbody>();
@@ -56,6 +57,7 @@ public class Skeleton : BaseEnemy
         myCollider = GetComponent<BoxCollider>();
         Physics.IgnoreCollision(myCollider, player.GetComponent<CapsuleCollider>(), true);
         rb.isKinematic = true;
+        
     }
     // Lógica
     void Update()
@@ -90,10 +92,16 @@ public class Skeleton : BaseEnemy
             case SkeletonState.Attack:
                 if (!isAttacking)
                 {
-                    StartCoroutine(AttackRoutine());
+                    attackRoutineRef = StartCoroutine(AttackRoutine());
                 }
                 break;
+            
             case SkeletonState.Die:
+                break;
+
+            case SkeletonState.Hit:
+
+               
                 break;
         }
     }
@@ -155,7 +163,7 @@ public class Skeleton : BaseEnemy
         }
 
         rb.linearVelocity = Vector3.zero;
-        rb.isKinematic = true; // volta a ser imune a empurrões
+        rb.isKinematic = true;
 
         agent.Warp(transform.position);
         agent.updatePosition = true;
@@ -183,6 +191,29 @@ public class Skeleton : BaseEnemy
         }
     }
 
+
+
+    void ResetAttackState()
+    {
+        isAttacking = false;
+        hasHitPlayerThisAttack = false;
+
+        // devolve o Rigidbody pro estado "seguro" (kinematic)
+        rb.isKinematic = true;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        // devolve o controle pro NavMeshAgent, caso tenha sido tirado no meio do dash
+        agent.Warp(transform.position);
+        agent.updatePosition = true;
+        agent.updateRotation = true;
+        agent.isStopped = false;
+
+        animator.SetBool("Attacking", false);
+        animator.SetBool("Running", false);
+    }
+
+
     IEnumerator Appear()
     {
         yield return new WaitForSeconds(1f);
@@ -206,6 +237,26 @@ public class Skeleton : BaseEnemy
         animator.SetBool("Attacking", false);
     }
 
+    void onHitAnimationEnd()
+    {
+        currentState = SkeletonState.Idle;
+    }
+
+    public override void TakeDamage(int damage, Vector3 position)
+    {
+        currentState = SkeletonState.Hit;
+
+        if (attackRoutineRef != null)
+        {
+            StopCoroutine(attackRoutineRef);
+            attackRoutineRef = null;
+        }
+        ResetAttackState();
+
+        animator.Play("TakeDamage",0,0f);
+
+        base.TakeDamage(damage, position);
+    }
 
     private void OnDrawGizmos()
     {

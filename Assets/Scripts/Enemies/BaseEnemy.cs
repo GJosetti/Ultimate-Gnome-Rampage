@@ -21,6 +21,9 @@ public class BaseEnemy : MonoBehaviour
     ParticleSystem pSystem;
     ParticleDamage particleDamage;
 
+    [SerializeField]
+    ParticleSystem diePSystem;
+
     protected virtual void Start()
     {
         player = PlayerController.Instance;
@@ -37,6 +40,7 @@ public class BaseEnemy : MonoBehaviour
        
 
         pSystem = GetComponentInChildren<ParticleSystem>();
+        //diePSystem = GetComponentInChildren<ParticleSystem>();
         particleDamage = GetComponentInChildren<ParticleDamage>();
     }
 
@@ -54,7 +58,7 @@ public class BaseEnemy : MonoBehaviour
 
 
 
-    public void TakeDamage(int damage, Vector3 position)
+    public virtual void TakeDamage(int damage, Vector3 position)
     {
         life -= damage;
         Debug.Log($"Ai! Estou com {life} de vida");
@@ -87,8 +91,12 @@ public class BaseEnemy : MonoBehaviour
 
     void Die()
     {
-        
         OnDeath?.Invoke(this);
+
+        diePSystem.transform.parent = null; // desgruda do esqueleto
+        diePSystem.Play();
+
         Destroy(gameObject);
+        Destroy(diePSystem.gameObject, diePSystem.main.duration);
     }
 }
