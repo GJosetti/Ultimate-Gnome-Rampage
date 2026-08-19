@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9147814655312418105}
   - component: {fileID: 647736756548721005}
   - component: {fileID: 1196431353962997581}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SwordAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 1124044332519587734}
   - component: {fileID: 7275854912886761198}
   - component: {fileID: 4321822657642236009}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GnomeModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 1193462297862203793}
   - component: {fileID: 7374818528026693707}
   - component: {fileID: 7569396607425821129}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -250,6 +250,7 @@ MonoBehaviour:
   jumpForce: 3
   jumpDistance: 10
   footHeight: 1.2
+  walkSpeed: 0
 --- !u!114 &3991081889276306000
 MonoBehaviour:
   m_ObjectHideFlags: 0
