@@ -24,6 +24,7 @@ public class Cannon : BaseEnemy
 
     enum CannonState
     {
+        Hide,
         Appear,
         Shooting,
         Idle
@@ -35,15 +36,20 @@ public class Cannon : BaseEnemy
 
         animator = GetComponent<Animator>();
         life = maxLife;
-        currentState = CannonState.Appear;
-
-        animator.SetTrigger("Appear");
+        currentState = CannonState.Hide;
     }
 
     void Update()
     {
         switch (currentState)
         {
+            case CannonState.Hide:
+                if (myRoom == GameManager.room)
+                {
+                    EnterAppear();
+                }
+                break;
+
             case CannonState.Appear:
                 // nada aqui; a troca de estado acontece via onAppearAnimationEnd (Animation Event)
                 break;
@@ -60,6 +66,12 @@ public class Cannon : BaseEnemy
                 }
                 break;
         }
+    }
+
+    void EnterAppear()
+    {
+        currentState = CannonState.Appear;
+        animator.SetTrigger("Appear");
     }
 
     void UpdateAiming()
