@@ -117,7 +117,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: -0.19, z: 0}
-  m_LocalScale: {x: 60, y: 60, z: 60}
+  m_LocalScale: {x: 80, y: 80, z: 80}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2462063229436701923}
@@ -188,6 +188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2462063229436701923}
   - component: {fileID: 2033360992391820106}
+  - component: {fileID: 6778682109697825807}
   - component: {fileID: 3637851552912180695}
   - component: {fileID: 3991081889276306000}
   - component: {fileID: 8364628792118367097}
@@ -235,6 +236,22 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &6778682109697825807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6707829582065913520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6533822d3c1f08b4da754a3c7d4f169a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 3
+  actualHealth: 0
+  IFrameDuration: 0
+  iFrameTimer: 0
 --- !u!114 &3637851552912180695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,9 +265,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 3
-  jumpDistance: 10
+  jumpDistance: 15
   footHeight: 1.2
-  walkSpeed: 0
+  walkSpeed: 30
 --- !u!114 &3991081889276306000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,7 +283,7 @@ MonoBehaviour:
   dashDistance: 30
   dashDuration: 0.4
   tickRate: 3
-  spinSpeed: 0.05
+  spinSpeed: 0.3
   damagePerTick: 1
   attackRadius: 2
   enemyLayerMask:

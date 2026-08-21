@@ -5,6 +5,8 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField]
     public int maxHealth, actualHealth;
+    public float IFrameDuration;
+    float iFrameTimer;
     
     
     
@@ -17,6 +19,12 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (iFrameTimer > 0)
+        { 
+            iFrameTimer -= Time.deltaTime;
+        }
+        
         if (actualHealth <= 0)
         {
             GameManager.ResetState();
@@ -26,7 +34,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        actualHealth -= amount;
-        GameManager.camera.ShakeCamera();
+        if (iFrameTimer <= 0)
+        { 
+            actualHealth -= amount;
+            GameManager.camera.ShakeCamera();
+            iFrameTimer = IFrameDuration;
+        }
     }
 }

@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: BaseCanhao
     second: {fileID: 2100000, guid: 63746f8b334b4c74d9b4c13726bfbbd8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CanhaoMetalTexture
+    second: {fileID: 2100000, guid: 72a6faf8455cfa144b42288a56e8ef62, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
