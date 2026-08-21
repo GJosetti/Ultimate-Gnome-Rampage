@@ -65,7 +65,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Cylinder
+    path: AimPivot/Cylinder
   m_PositionCurves:
   - curve:
       serializedVersion: 2
@@ -145,7 +145,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Cylinder
+    path: AimPivot/Cylinder
   m_ScaleCurves:
   - curve:
       serializedVersion: 2
@@ -245,7 +245,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1651653052
+      path: 1250506808
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -254,7 +254,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1651653052
+      path: 1250506808
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -652,7 +652,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Cylinder
+    path: AimPivot/Cylinder
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -736,7 +736,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Cylinder
+    path: AimPivot/Cylinder
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -820,7 +820,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Cylinder
+    path: AimPivot/Cylinder
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -859,7 +859,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Cylinder
+    path: AimPivot/Cylinder
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -898,7 +898,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Cylinder
+    path: AimPivot/Cylinder
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -955,7 +955,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Cylinder
+    path: AimPivot/Cylinder
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -968,7 +968,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Cylinder
+    path: AimPivot/Cylinder
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -980,7 +980,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Cylinder
+    path: AimPivot/Cylinder
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -992,7 +992,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Cylinder
+    path: AimPivot/Cylinder
     classID: 4
     script: {fileID: 0}
     flags: 0

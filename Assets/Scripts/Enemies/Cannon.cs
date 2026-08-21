@@ -74,11 +74,20 @@ public class Cannon : BaseEnemy
         animator.SetTrigger("Appear");
     }
 
+    void EnterShooting()
+    {
+        currentState = CannonState.Shooting;
+        aimTimer = 0f;
+        aimLocked = false;
+        // não dispara "Shoot" aqui — o cano fica parado (Idle) enquanto mira
+    }
+
     void UpdateAiming()
     {
         if (aimLocked) return;
 
         Vector3 dirToPlayer = GetPlayer().transform.position - cannonBarrel.position;
+        dirToPlayer.y = 0;
         if (dirToPlayer != Vector3.zero)
         {
             Quaternion targetRot = Quaternion.LookRotation(dirToPlayer);
@@ -88,16 +97,9 @@ public class Cannon : BaseEnemy
         aimTimer += Time.deltaTime;
         if (aimTimer >= aimTrackDuration - aimLockOffset)
         {
-            aimLocked = true; // trava a mira; o disparo em si é acionado pela animação (Animation Event -> FireProjectile)
+            aimLocked = true;
+            animator.SetTrigger("Shoot"); // só agora, com a mira já travada, dispara a animação de tiro
         }
-    }
-
-    void EnterShooting()
-    {
-        currentState = CannonState.Shooting;
-        aimTimer = 0f;
-        aimLocked = false;
-        animator.SetTrigger("Shoot");
     }
 
     // chamado via Animation Event, no frame exato em que o cano deveria soltar o projétil
