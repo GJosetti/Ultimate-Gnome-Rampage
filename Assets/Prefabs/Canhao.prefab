@@ -24,12 +24,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636778057686778327}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 2.734, z: 4.66}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.02800013, y: 2.734, z: 4.6600003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7377968374563747908}
+  m_Father: {fileID: 531534564779845973}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5042797972822318222
 GameObject:
@@ -5053,6 +5053,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4455119767208609182}
+  - {fileID: 3619501554787223962}
   m_Father: {fileID: 7377968374563747908}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7666557945153285579
@@ -5179,7 +5180,6 @@ Transform:
   m_Children:
   - {fileID: 5913905497774039841}
   - {fileID: 531534564779845973}
-  - {fileID: 3619501554787223962}
   - {fileID: 1039046342467366495}
   - {fileID: 8099631114393313232}
   m_Father: {fileID: 0}
@@ -5197,11 +5197,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cannon
   maxLife: 3
-  myRoom: 3
+  myRoom: 1
   player: {fileID: 0}
   diePSystem: {fileID: 2310229151787740047}
   cannonBarrel: {fileID: 531534564779845973}
   firePoint: {fileID: 3619501554787223962}
+  projectilePrefab: {fileID: 7558225635945127774, guid: 80deb424cbbcb1f4280049918ef62a91, type: 3}
   aimTrackDuration: 1.5
   aimLockOffset: 0.3
   aimRotationSpeed: 30
@@ -5248,8 +5249,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 3.9081514, z: 5.7601037}
-  m_Center: {x: -6.4397164e-14, y: 1.4540758, z: 1.7103791}
+  m_Size: {x: 1, y: 3.9081514, z: 1.9468347}
+  m_Center: {x: 1.2476443e-14, y: 1.4540758, z: -0.19625656}
 --- !u!54 &92999204152443598
 Rigidbody:
   m_ObjectHideFlags: 0

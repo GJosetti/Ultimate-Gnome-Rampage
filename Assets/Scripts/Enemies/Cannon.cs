@@ -5,6 +5,7 @@ public class Cannon : BaseEnemy
     [Header("Referências")]
     [SerializeField] Transform cannonBarrel; // parte que rotaciona, filho separado da base
     [SerializeField] Transform firePoint;    // ponto na ponta do cano de onde o projétil vai sair (opcional, pra quando implementar)
+    [SerializeField] GameObject projectilePrefab; // prefab do projétil (opcional, pra quando implementar)
 
     [Header("Mira")]
     [SerializeField, Range(0.1f, 5f)] float aimTrackDuration = 1.5f; // tempo total seguindo o player antes de travar
@@ -13,6 +14,7 @@ public class Cannon : BaseEnemy
 
     [Header("Idle")]
     [SerializeField, Range(0.5f, 10f)] float idleDuration = 2f;
+
 
     Animator animator;
     [SerializeField]
@@ -105,6 +107,7 @@ public class Cannon : BaseEnemy
     // chamado via Animation Event, no frame exato em que o cano deveria soltar o projétil
     void FireProjectile()
     {
+        Instantiate(projectilePrefab, firePoint.position, cannonBarrel.rotation);
         // TODO: instanciar/ativar o projétil aqui quando estiver pronto
         // ex: Instantiate(projectilePrefab, firePoint.position, cannonBarrel.rotation);
     }
