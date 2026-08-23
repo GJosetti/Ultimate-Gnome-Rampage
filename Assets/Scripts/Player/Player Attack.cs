@@ -45,6 +45,17 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if (PlayerController.Instance.IsFastSpin)
+        {
+            spinSpeed = 0.1f;
+        }
+        else
+        { 
+            spinSpeed = 0.3f;
+
+        }
+
+
         if (Input.GetMouseButtonDown(0))
         {
             if (!controller.IsDashAttacking)
@@ -111,6 +122,7 @@ public class PlayerAttack : MonoBehaviour
        
         while (Input.GetMouseButton(0))
         {
+             rotationSpeed = 360f / spinSpeed;
             yield return new WaitForFixedUpdate();
             swordDrag.ResetHits();
             float step = rotationSpeed * Time.fixedDeltaTime;
