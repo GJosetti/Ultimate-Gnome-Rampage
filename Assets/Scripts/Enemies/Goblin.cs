@@ -149,7 +149,8 @@ public class Goblin : BaseEnemy
             Destroy(fx.gameObject, fx.main.duration);
         }
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        Die();
     }
 
     IEnumerator Appear()

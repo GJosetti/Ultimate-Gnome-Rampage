@@ -94,10 +94,10 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
         OnDeath?.Invoke(this);
-
+        
         diePSystem.transform.parent = null; // desgruda do esqueleto
         diePSystem.Play();
 
