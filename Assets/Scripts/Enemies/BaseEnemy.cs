@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour
@@ -23,6 +25,9 @@ public class BaseEnemy : MonoBehaviour
 
     [SerializeField]
     ParticleSystem diePSystem;
+
+    [SerializeField]
+    List<PowerUp> listPowerUps;
 
     protected virtual void Start()
     {
@@ -96,6 +101,11 @@ public class BaseEnemy : MonoBehaviour
         diePSystem.transform.parent = null; // desgruda do esqueleto
         diePSystem.Play();
 
+        if (listPowerUps.Count > 0)
+        { 
+            Instantiate(listPowerUps[Random.Range(0, listPowerUps.Count)],new Vector3(transform.position.x, 1.5f,transform.position.z),Quaternion.identity);        
+        }
+        
         Destroy(gameObject);
         Destroy(diePSystem.gameObject, diePSystem.main.duration);
     }
