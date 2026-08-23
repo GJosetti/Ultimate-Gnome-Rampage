@@ -4,7 +4,7 @@ using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.PlayerSettings;
+
 public class Skeleton : BaseEnemy
 {
     [SerializeField] int damage;
