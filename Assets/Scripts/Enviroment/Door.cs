@@ -8,6 +8,8 @@ public class Door : MonoBehaviour
     int myRoom;
     BoxCollider collider;
     Animator portaAnim;
+    [SerializeField]
+    SceneFader fade;
 
     Vector3 EntradaPos;
 
@@ -41,6 +43,16 @@ public class Door : MonoBehaviour
     {
         if (other.CompareTag("Player") && (EntradaPos.x < other.gameObject.transform.position.x))
         {
+
+            if (myRoom == 6)
+            {
+                fade.onFinalDoorReached();
+            }
+            
+            
+            
+            
+            
             camera1.Priority = 0;
             camera2.Priority = 10;
             GameManager.room++;

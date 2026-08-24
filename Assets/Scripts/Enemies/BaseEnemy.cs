@@ -69,7 +69,7 @@ public class BaseEnemy : MonoBehaviour
     {
         life -= damage;
 
-        hitAudio.pitch = UnityEngine.Random.Range(1f, 1.2f);
+        hitAudio.pitch = UnityEngine.Random.Range(1.2f, 1.7f);
         hitAudio.Play();
 
         particleDamage.RotateHitEffect(position);
@@ -106,8 +106,11 @@ public class BaseEnemy : MonoBehaviour
         diePSystem.Play();
 
         if (listPowerUps.Count > 0)
-        { 
-            Instantiate(listPowerUps[Random.Range(0, listPowerUps.Count)],new Vector3(transform.position.x, 1.5f,transform.position.z),Quaternion.identity);        
+        {
+            if (Random.Range(0, 2) == 1)
+            {
+                Instantiate(listPowerUps[Random.Range(0, listPowerUps.Count)], new Vector3(transform.position.x, 1.5f, transform.position.z), Quaternion.identity);
+            }
         }
         
         Destroy(gameObject);

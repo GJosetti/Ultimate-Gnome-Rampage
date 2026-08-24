@@ -35,6 +35,11 @@ public class SceneFader : MonoBehaviour
         StartCoroutine(FadeOutAndLoadScene());
     }
 
+    public void onFinalDoorReached()
+    { 
+        StartCoroutine(FadeOutAndLoadScene());
+    }
+
     IEnumerator FadeOutAndLoadScene()
     {
         yield return StartCoroutine(Fade(0f, 1f, fadeDuration));
