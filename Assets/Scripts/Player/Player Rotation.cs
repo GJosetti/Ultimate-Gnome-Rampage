@@ -18,6 +18,7 @@ public class PlayerRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerController.Instance.isDead) return;
         if (controller.IsDashAttacking) return;
 
         Vector3 mousePos = Input.mousePosition;

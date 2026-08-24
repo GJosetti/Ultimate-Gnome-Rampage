@@ -45,6 +45,10 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if (PlayerController.Instance.isDead) return;
+         
+            
+       
         if (PlayerController.Instance.IsFastSpin)
         {
             spinSpeed = 0.1f;

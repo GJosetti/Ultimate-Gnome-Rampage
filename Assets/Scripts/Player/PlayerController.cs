@@ -34,9 +34,12 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField]
     public float InvencibleDuration;
+    
     [SerializeField]
     public float InvencibleTimer;
 
+    [SerializeField]
+    public bool isDead;
 
 
 
@@ -48,6 +51,8 @@ public class PlayerController : MonoBehaviour
     public void SetInvencible(bool value) => IsInvencible = value;
 
     public void SetFastSpin(bool value) => IsFastSpin = value;
+
+    public void SetIsDead(bool value) => isDead = value;
 
     private void Awake()
     {

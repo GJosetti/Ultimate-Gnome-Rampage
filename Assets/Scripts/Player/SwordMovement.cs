@@ -33,7 +33,7 @@ public class SwordDrag : MonoBehaviour
 
     void FixedUpdate()
     {
-    
+        if (PlayerController.Instance.isDead) return;
         Vector3 toTarget = handAnchor.position - currentPos;
         Vector3 acceleration = toTarget * stiffness - velocity * damping;
         velocity += acceleration * Time.fixedDeltaTime;

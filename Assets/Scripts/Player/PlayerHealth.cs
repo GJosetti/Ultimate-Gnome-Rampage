@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -21,6 +23,16 @@ public class PlayerHealth : MonoBehaviour
     static readonly int BaseColorID = Shader.PropertyToID("_BaseColor");
     static readonly int EmissionColorID = Shader.PropertyToID("_EmissionColor");
 
+    [Header("Morte")]
+    [SerializeField] Animator animator;
+    [SerializeField] Image redFilter;
+    [SerializeField] CanvasGroup deathScreen;
+    [SerializeField] Button restartButton;
+    [SerializeField] float redFilterFadeDuration = 1f;
+    [SerializeField] float deathScreenDelay = 1.5f;
+
+    bool isDead;
+
     void Start()
     {
         actualHealth = maxHealth;
@@ -29,7 +41,23 @@ public class PlayerHealth : MonoBehaviour
         {
             meshMaterial = meshRenderer.material;
             originalColor = meshMaterial.GetColor(BaseColorID);
-            meshMaterial.EnableKeyword("_EMISSION"); // habilita emissão desde já; controlamos a intensidade via cor
+            meshMaterial.EnableKeyword("_EMISSION");
+        }
+
+        if (deathScreen != null)
+        {
+            deathScreen.alpha = 0f;
+            deathScreen.gameObject.SetActive(false);
+        }
+        if (redFilter != null)
+        {
+            Color c = redFilter.color;
+            c.a = 0f;
+            redFilter.color = c;
+        }
+        if (restartButton != null)
+        {
+            restartButton.onClick.AddListener(RestartLevel);
         }
     }
 
@@ -42,10 +70,11 @@ public class PlayerHealth : MonoBehaviour
 
         UpdateInvincibleBlink();
 
-        if (actualHealth <= 0)
+        if (actualHealth <= 0 && !isDead)
         {
-            GameManager.ResetState();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            isDead = true;
+            PlayerController.Instance.SetIsDead(true);
+            StartCoroutine(DeathSequence());
         }
     }
 
@@ -56,15 +85,63 @@ public class PlayerHealth : MonoBehaviour
         if (PlayerController.Instance.IsInvencible)
         {
             float t = (Mathf.Sin(Time.time * blinkSpeed) + 1f) / 2f;
-
             meshMaterial.SetColor(BaseColorID, Color.Lerp(originalColor, invincibleColor, t));
             meshMaterial.SetColor(EmissionColorID, emissionColor * emissionIntensity * t);
         }
         else
         {
             meshMaterial.SetColor(BaseColorID, originalColor);
-            meshMaterial.SetColor(EmissionColorID, Color.black); // emissão "zerada" = sem brilho
+            meshMaterial.SetColor(EmissionColorID, Color.black);
         }
+    }
+
+    IEnumerator DeathSequence()
+    {
+        animator?.SetTrigger("Die");
+        StartCoroutine(FadeRedFilter());
+
+        yield return new WaitForSeconds(deathScreenDelay);
+
+        if (deathScreen != null)
+        {
+            deathScreen.gameObject.SetActive(true);
+            yield return StartCoroutine(FadeCanvasGroup(deathScreen, 0f, 1f, 0.5f));
+        }
+    }
+
+    IEnumerator FadeRedFilter()
+    {
+        if (redFilter == null) yield break;
+
+        float elapsed = 0f;
+        Color c = redFilter.color;
+        while (elapsed < redFilterFadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            c.a = Mathf.Lerp(0f, 0.6f, elapsed / redFilterFadeDuration);
+            redFilter.color = c;
+            yield return null;
+        }
+    }
+
+    IEnumerator FadeCanvasGroup(CanvasGroup group, float from, float to, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            group.alpha = Mathf.Lerp(from, to, elapsed / duration);
+            yield return null;
+        }
+        group.alpha = to;
+        group.interactable = to > 0.5f;
+        group.blocksRaycasts = to > 0.5f;
+    }
+
+    void RestartLevel()
+    {
+        GameManager.ResetState();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void TakeDamage(int amount)
@@ -74,6 +151,7 @@ public class PlayerHealth : MonoBehaviour
             actualHealth -= amount;
             GameManager.camera.ShakeCamera();
             iFrameTimer = IFrameDuration;
+           
         }
     }
 

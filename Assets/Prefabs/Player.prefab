@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 443302307826373165}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.32, y: 0.00156, z: -0.465}
+  m_LocalPosition: {x: 0.501, y: -0.248, z: -0.631}
   m_LocalScale: {x: 0.25656143, y: 0.25656143, z: 0.25656143}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -116,7 +116,7 @@ Transform:
   m_GameObject: {fileID: 1090022304367526501}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: -0.19, z: 0}
+  m_LocalPosition: {x: 0, y: -0.369, z: 0}
   m_LocalScale: {x: 80, y: 80, z: 80}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 1193462297862203793}
   - component: {fileID: 7374818528026693707}
   - component: {fileID: 7569396607425821129}
+  - component: {fileID: 2122437773265976620}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -250,8 +251,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHealth: 3
   actualHealth: 0
-  IFrameDuration: 0
-  iFrameTimer: 0
+  IFrameDuration: 0.3
+  animator: {fileID: 0}
+  redFilter: {fileID: 0}
+  deathScreen: {fileID: 0}
+  restartButton: {fileID: 0}
+  redFilterFadeDuration: 1
+  deathScreenDelay: 1.5
 --- !u!114 &3637851552912180695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,6 +314,12 @@ MonoBehaviour:
   isAttackSpin: 0
   IsJumping: 0
   IsAttacking: 0
+  IsInvencible: 0
+  IsFastSpin: 0
+  FastSpinDuration: 5
+  FastSpinTimer: 0
+  InvencibleDuration: 5
+  InvencibleTimer: 0
 --- !u!54 &3885544568947807341
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -355,9 +367,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.7502434
-  m_Height: 2.1389704
+  m_Height: 2.7617102
   m_Direction: 1
-  m_Center: {x: -0.047763348, y: 0.5307803, z: 0.059979677}
+  m_Center: {x: -0.047763348, y: 0.4743104, z: 0.059979677}
 --- !u!33 &7374818528026693707
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -414,3 +426,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &2122437773265976620
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6707829582065913520}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0b02585b1d179564580877aa10ece25b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

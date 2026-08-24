@@ -26,13 +26,13 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+  
 
     
 
     void FixedUpdate()
     {
-
+        if (PlayerController.Instance.isDead) return;
         if (controller.IsDashAttacking && !controller.isAttackSpin) return; // não pode mover enquanto ataca
 
         Vector3 inputDir = InputCheck();

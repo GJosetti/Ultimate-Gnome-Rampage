@@ -43,6 +43,7 @@ public class Cannon : BaseEnemy
 
     void Update()
     {
+        if (PlayerController.Instance.isDead) return;
         switch (currentState)
         {
             case CannonState.Hide:

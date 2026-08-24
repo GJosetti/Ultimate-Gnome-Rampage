@@ -62,6 +62,8 @@ public class Skeleton : BaseEnemy
     // Lógica
     void Update()
     {
+        if (PlayerController.Instance.isDead) return;
+
         switch (currentState)
         {
             case SkeletonState.Hide:
@@ -108,6 +110,7 @@ public class Skeleton : BaseEnemy
     //Física
     void FixedUpdate()
     {
+        if (PlayerController.Instance.isDead) return;
         switch (currentState)
         {
             case SkeletonState.Walk:
