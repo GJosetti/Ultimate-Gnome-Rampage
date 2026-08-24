@@ -30,6 +30,8 @@ public class BaseEnemy : MonoBehaviour
     List<PowerUp> listPowerUps;
 
     [SerializeField] AudioSource hitAudio;
+    [SerializeField] AudioSource dieAudio;
+
 
     protected virtual void Start()
     {
@@ -78,6 +80,7 @@ public class BaseEnemy : MonoBehaviour
 
         if (life <= 0)
         {
+            dieAudio.Play();
             Die();
         }
     }
@@ -100,10 +103,12 @@ public class BaseEnemy : MonoBehaviour
 
     public void Die()
     {
+        
         OnDeath?.Invoke(this);
         
         diePSystem.transform.parent = null; // desgruda do esqueleto
         diePSystem.Play();
+
 
         if (listPowerUps.Count > 0)
         {

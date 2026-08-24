@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 
 public class Goblin : BaseEnemy
 {
@@ -24,6 +25,9 @@ public class Goblin : BaseEnemy
     BomberState currentState;
     bool isAttacking;
     Coroutine attackRoutineRef;
+
+    [SerializeField] AudioSource goblinJumping;
+
 
     enum BomberState
     {
@@ -121,6 +125,8 @@ public class Goblin : BaseEnemy
         // ativa física real e dá o pulo/dash em direção ao player
         rb.isKinematic = false;
         rb.AddForce(dashDir * dashForce + Vector3.up * jumpForce, ForceMode.Impulse);
+
+        goblinJumping.Play();
 
         // espera o tempo de explosão, independente de ter aterrissado ou não
         yield return new WaitForSeconds(explosionDelay);

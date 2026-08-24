@@ -31,6 +31,9 @@ public class Skeleton : BaseEnemy
     bool hasHitPlayerThisAttack;
     Coroutine attackRoutineRef;
 
+    bool playAudioAppear = false;
+    [SerializeField] AudioSource skeletonAppear;
+
     enum SkeletonState
     {
         Hide,
@@ -216,19 +219,27 @@ public class Skeleton : BaseEnemy
         animator.SetBool("Running", false);
     }
 
+    
 
     IEnumerator Appear()
     {
         yield return new WaitForSeconds(1f);
         animator.speed = 1;
+        if (!playAudioAppear)
+        {
+            skeletonAppear.Play();
+            playAudioAppear = true;
+        }
 
         yield return new WaitForSeconds(1f);
+        
         if (currentState == SkeletonState.Hide)
             onAppearAnimationEnd();
     }
     void onAppearAnimationEnd()
     {
         currentState = SkeletonState.Idle;
+        
     }
 
     void onAttackAnimationEnd()
