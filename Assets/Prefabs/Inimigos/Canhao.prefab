@@ -5205,10 +5205,10 @@ MonoBehaviour:
   cannonBarrel: {fileID: 531534564779845973}
   firePoint: {fileID: 3619501554787223962}
   projectilePrefab: {fileID: 7558225635945127774, guid: 80deb424cbbcb1f4280049918ef62a91, type: 3}
-  aimTrackDuration: 1.5
-  aimLockOffset: 0.3
+  aimTrackDuration: 1.3
+  aimLockOffset: 0
   aimRotationSpeed: 30
-  idleDuration: 2
+  idleDuration: 0.5
   currentState: 0
 --- !u!95 &7222353851793378921
 Animator:

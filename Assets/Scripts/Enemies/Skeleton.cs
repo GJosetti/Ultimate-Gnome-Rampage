@@ -247,6 +247,7 @@ public class Skeleton : BaseEnemy
 
     public override void TakeDamage(int damage, Vector3 position)
     {
+        if (currentState == SkeletonState.Hide) return;
         currentState = SkeletonState.Hit;
 
         if (attackRoutineRef != null)
