@@ -32,6 +32,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] float deathScreenDelay = 1.5f;
 
     [SerializeField] AudioSource takedDamageAudio;
+    [SerializeField] AudioSource gainLifeAudio;
+
 
     bool isDead;
 
@@ -161,5 +163,6 @@ public class PlayerHealth : MonoBehaviour
     public void IncreaseHealth(int amount)
     {
         actualHealth += amount;
+        gainLifeAudio.Play();
     }
 }
