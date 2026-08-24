@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        GameManager.ResetState();
     }
 
     private void Update()
