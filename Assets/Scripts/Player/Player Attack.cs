@@ -29,6 +29,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     SwordDrag swordDrag;
 
+    [SerializeField]
+    AudioSource attackSound;
+
 
     public PhysicsMaterial dashMaterial; // atrito 0, configurado no Inspector
     public PhysicsMaterial normalMaterial; // seu material padr�o
@@ -64,6 +67,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (!controller.IsDashAttacking)
             {
+                attackSound.Play();
                 StartCoroutine(DashAttack(rotation.mouseDir));
             }
         }

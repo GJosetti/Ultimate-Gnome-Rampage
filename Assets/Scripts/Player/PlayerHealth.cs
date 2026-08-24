@@ -31,6 +31,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] float redFilterFadeDuration = 1f;
     [SerializeField] float deathScreenDelay = 1.5f;
 
+    [SerializeField] AudioSource takedDamageAudio;
+
     bool isDead;
 
     void Start()
@@ -148,6 +150,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (iFrameTimer <= 0 && !PlayerController.Instance.IsInvencible)
         {
+            takedDamageAudio.Play();
             actualHealth -= amount;
             GameManager.camera.ShakeCamera();
             iFrameTimer = IFrameDuration;

@@ -29,6 +29,8 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField]
     List<PowerUp> listPowerUps;
 
+    [SerializeField] AudioSource hitAudio;
+
     protected virtual void Start()
     {
         player = PlayerController.Instance;
@@ -66,7 +68,9 @@ public class BaseEnemy : MonoBehaviour
     public virtual void TakeDamage(int damage, Vector3 position)
     {
         life -= damage;
-        Debug.Log($"Ai! Estou com {life} de vida");
+
+        hitAudio.pitch = UnityEngine.Random.Range(1f, 1.2f);
+        hitAudio.Play();
 
         particleDamage.RotateHitEffect(position);
         pSystem.Play();

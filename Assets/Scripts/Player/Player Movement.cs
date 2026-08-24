@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 using static UnityEngine.UI.Image;
 
@@ -10,8 +11,9 @@ public class PlayerMovement : MonoBehaviour
     
     Rigidbody rb;
 
-  
-    
+    [SerializeField]
+    AudioSource jumpSound;
+
 
     [Range(0,100)]
     public float jumpForce, jumpDistance, footHeight,walkSpeed;
@@ -45,8 +47,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!controller.IsJumping && isOnGround() && (inputDir != Vector3.zero))
             {
-                JumpTowardsDirection(inputDir);
-                
+                JumpTowardsDirection(inputDir);                
             }
             
         }
@@ -90,7 +91,8 @@ public class PlayerMovement : MonoBehaviour
     {
         controller.SetJumping(true);
 
-        
+        jumpSound.pitch = UnityEngine.Random.Range(1f, 1.5f);
+        jumpSound.Play();
 
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         
